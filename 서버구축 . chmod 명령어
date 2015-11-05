@@ -1,0 +1,13 @@
+permision  관련 정리 ..!
+
+read/write/execute
+   owner:group:other
+-:rwx:rw-:r--: jlucas7 jlucas7(그룹이름) test_file (파일이다 앞에 d가 없으니까)
+  421 421 421
+  
+l이 붙으면 심볼릭 링크 걸었을때
+s 붙으면
+
+$chmod 7 6 4 test_file
+$chgrp 그룹변경
+$chown 오너변경 (자기가 쓴거를 남한테 주지는 못한다)
