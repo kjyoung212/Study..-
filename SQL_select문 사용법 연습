@@ -1,0 +1,422 @@
+2-B                           201144011 김진영            제출일 : 2014년 10월 06일
+실전문제
+1.실습에 사용될 STUDENT 테이블의 구조를 검색하라.
+SQL> desc student;
+　
+2.실습에 사용될 SUBJECT 테이블의 구조를 검색하라.
+SQL>　desc subject;
+
+3.실습에 사용될 STUDENT 테이블의 모든 데이터를 검색하라.
+SQL> select * from student;
+
+
+
+
+
+
+
+
+
+
+
+
+
+4.실습에 사용될 ENROL 테이블의 모든 데이터를 검색하라.
+SQL> select * from enrol;
+
+5,학생들의 학번과 이름을 검색하라.
+SQL> select stu_no,stu_name from student;
+
+
+6.과목들의 과목코드와 과목명을 검색하라.
+SQL> select sub_no,sub_name from subject;
+
+
+
+7.학생들의 학번과 이름,성별을 검색하라.
+SQL> select stu_no,stu_name,stu_gender from student;
+
+
+
+8.학생들의 모든 정보를 검색하라.
+SQL> select * from student;
+
+
+9.학생들의 학번과 이름,학년,반을 검색하라.
+SQL> select stu_no,stu_name,stu_grade,stu_class from student;
+
+
+10.과목들의 과목명과 담당교수명을 검색하라.
+SQL> select sub_name,sub_prof from subject;
+
+
+11.과목번호,학번,점수를 검색하라.
+SQL> select sub_no,stu_no,enr_grade from enrol;
+
+
+12.학생들의 체중과 신장을 검색하라.
+SQL> select stu_weight,stu_height from student;
+
+
+13.학생들의 학과를 중복을 제거하고 검색하라.
+SQL> select distinct stu_dept from student;
+
+14.학생들의 성별을 중복을 제거하고 검색하라.
+SQL> select distinct stu_gender from student;
+
+
+15.학생들의 학년을 중복을 제거하고 검색하라.
+SQL> select distinct stu_grade from student;
+
+
+16.학생들의 학과,학년을 중복을 제거하고 검색하라.
+SQL> select distinct stu_dept,stu_grade from student;
+
+
+17.학생들의 반을 중복을 제거하고 검색하라.
+SQL> select distinct stu_class from student;
+
+
+18.학생들의 체중을 5만큼씩 증가시킨 값을 검색하라.
+SQL> select stu_weight+5 from student;
+
+19.학생들의 체중을 5만큼씩 감소시킨 값을 검색하라.
+SQL> select stu_weight-5 from student;
+
+
+20.학생들의 학번과 이름을 별칭을 “학번”과“이름”으로 부여하여 검색하라.
+SQL> select stu_no as 학번, stu_name as 이름  from student;
+
+21.수강테이블의 모든 정보를 검색하라(단,별칭을 한글로 부여하여 검색).
+SQL> select sub_no as 과목코드, stu_no as 학번 ,enr_grade as 점수  from enrol;
+
+
+22.과목 테이블에서 과목명과 교수명을 한글로 검색하라.
+SQL> select sub_name as 과목명 , sub_prof as 교수명 from subject; 
+
+
+
+23.학생 테이블에서 이름과 학과명을 합쳐서 검색하라.
+SQL> select stu_name || stu_dept from student;
+
+
+
+24.학생의 이름과 학과를 ‘컴퓨터정보과 옥한빛입니다.’식으로 검색하라.
+SQL> select stu_dept ||'과'|| stu_name||'입니다.' from student;
+
+
+25.컴퓨터 정보과 학생들을 검색하라.
+SQL> select * from student  where stu_dept='컴퓨터정보';                                          
+
+26.키가 170 이상인 학생들을 검색하라.
+SQL> select * from student where stu_height>=170; 
+
+
+27.학과가 “기계”인 학생들의 학번,이름을 구하라.
+SQL> select stu_no,stu_name from student where stu_dept='기계'; 
+
+
+28.성별이 남학생인 학생들의 이름을 구하라.
+SQL> select stu_name from student  where stu_gender='M'; 
+
+
+
+29.학과가 “전기전자”가 아닌 학생들의 모든 정보를 검색하라.
+SQL> select * from student where stu_dept <> '전기전자'; 
+
+
+30.수강 과목 점수가 80점 이상인 학생들의 학번을 구하라.
+SQL> select stu_no from enrol where enr_grade >=80; 
+
+
+31.‘김인중’학생의 모든 정보를 구하라.
+SQL> select * from student where stu_name='김인중'; 
+
+
+32.‘컴퓨터정보’과 학생 중 1학년 학생을 모두 검색하라.
+select * from student where stu_dept='컴퓨터정보' and stu_grade=1; 
+
+
+33.‘기계’과 이면서 2학년인 학생들의 모든 정보를 검색하라.
+SQL> select * from student where stu_dept='기계' and stu_grade=2; 
+
+
+34.성별이 여학생이며,체중이 60이하인 학생을 모두 검색하라.
+SQL> select * from student where stu_gender='F' and stu_weight<=60; 
+
+
+35.‘컴퓨터정보’과 외에 1학년 학생들의 이름을 구하라.
+SQL> select stu_name from student where stu_dept<>'컴퓨터정보' and stu_grade=1; 
+
+
+36.과목 중 ‘기계’과 이외의 과목을 구하라.
+SQL> select * from subject where sub_dept^='기계'; 
+
+37.학생이 A반이며,학년이 2학년 이하인 학생의 이름을 구하라.
+SQL> select stu_name from student where stu_class='A' and stu_grade<=2; 
+
+
+38.신장이 160이상 이며,170이하인 학생의 학번과 이름을 구하라.
+SQL> select stu_no,stu_name from student where stu_height between 160 and 170; 
+또는  select stu_no,stu_name from student where stu_height>=160 and stu_height<=170; 
+
+
+39.2009 학번인 학생의 학번과 이름, 학과를 구하라.
+SQL> select stu_no,stu_name,stu_dept from student where stu_no like '2009%'; 
+
+
+40.1,2학년 학생들의 모든 정보를 검색하라.
+SQL> select * from student where stu_grade=1 or stu_grade=2; 
+또는  select * from student where stu_grade in (1,2); 
+
+41.‘김’씨 성을 가진 학생의 학번과 이름을 구하라.
+SQL> select stu_no,stu_name from student where stu_name like '김%'; 
+
+42.학번이 XXXX20XXX인 학생의 모든 정보를 구하라.
+SQL> select * from student where stu_no like '____20%'; 
+
+43.학번이 2006년 학번 학생의 모든 정보를 구하라.
+SQL> select * from student where stu_no like '2006%'; 
+
+44.이름에 ‘옥’가 들어있는 학생의 이름을 구하라.
+SQL> select stu_name from student where stu_name like '%옥%'; 
+
+
+45.신장이 NULL인 학생의 이름을 구하라.
+SQL> select stu_name from student where stu_height is null; 
+
+46.신장이 NULL이 아닌 학생의 학번,이름을 구하라.
+SQL> select stu_no,stu_name from student where stu_height is not null; 
+
+
+47.학번이 20093075 또는 20061062인 학생의 이름을 구하라.
+SQL> select stu_name from student where stu_no='20093075' or stu_no='20061062'; 
+또는  select stu_name from student where stu_no in('20093075','20061062'); 
+
+
+
+48.학과가 컴퓨터정보 또는 기계인 학생의 학번,이름을 구하라.
+SQL> select stu_no,stu_name from student where stu_dept = '컴퓨터정보' or stu_dept='기계'; 
+또는  select stu_no,stu_name from student where stu_dept in('컴퓨터정보','기계'); 
+
+49.성별이 남학생 또는 학년이 1학년인 학생의 학번,이름,학과를 구하라.
+SQL> select stu_no,stu_name,stu_dept from student where stu_gender='M' or stu_grade=1; 
+
+
+50.학생들의 학번,이름을 학번순으로 구하라.
+SQL> select stu_no,stu_name from student order by stu_no; 
+
+
+51.학생들의 학번,이름을 이름순으로 구하라.
+SQL> select stu_no,stu_name from student order by stu_name; 
+
+52.학생들의 학번,이름,학과를 학과별 이름순으로 구하라.
+SQL> select stu_no,stu_name,stu_dept from student order by stu_dept,stu_name; 
+
+53.학생들의 정보를 학과별 하년이 높은 순으로 구하라.
+SQL> select * from student order by stu_dept,stu_grade desc; 
+
+54.학생들의 정보를 학과별 반 순으로 구하라.
+SQL> select * from student order by stu_dept,stu_class; 
+
+55.학생들의 정보를 학과별,성별,학년 순으로 구하라.
+SQL> select * from student order by stu_dept,stu_gender,stu_grade; 
+
+56.학생들의 성별을 소문자로 구하라.
+SQL> select lower(stu_gender) from student;
+
+57.학생들의 성별을 대문자로 구하라.
+SQL> select upper(stu_gender) from student;
+
+58.학생들의 이름,학과를 연결하여 구하라.
+SQL> select concat(stu_name,stu_dept) from student;
+
+
+59.학생들의 이름과 이름의 첫2자를 구하라.
+SQL> select stu_name,substr(stu_name,1,2) from student;
+
+
+60.학생들의 이름,학과 그리고 학과의 2번째부터 1자리를 구하라.
+SQL> select stu_name,stu_dept,substr(stu_dept,2,1) from student;
+
+
+61.학생들의 이름과 이름의 길이를 구하라.
+SQL> select stu_name,length(stu_name) from student;
+
+
+62.학생들의 학과와 학과의 자리수를 구하라.
+SQL> select stu_dept,length(stu_dept) from student;
+
+
+63.학생들의 이름에 ‘김’이 몇 번째 있는지 구하라.
+SQL> select stu_name,instr(stu_name,'김') from student;
+
+
+64.학생들의 학과에 ‘기’가 몇 번째 있는지 구하라.
+SQL> select stu_dept,instr(stu_dept,'기') from student;
+
+
+65.학생의 이름을 15자리로 하고,뒤에 ‘&’를 채워 구하라.
+SQL> select rpad(stu_name,15,'&') from student;
+
+
+66.학생의 학과를 20자리로 하고,앞에 ‘%’를 채워 구하라.
+SQL> select lpad(stu_dept,20,'%') from student;
+
+
+
+67.학생의 학번,이름,신장을 구하라.(신장은 1번째자리에서 반올림함)
+SQL> select stu_no,stu_name,stu_height,round(stu_height,-1) from student;
+
+
+68.학생의 학번,이름,신장을 구하라.(신장은 두 번째 자리까지 절삭함)
+SQL> select stu_no,stu_name,stu_height,trunc(stu_height,-1) from student;
+
+69.체중을 30으로 나눈 나머지를 구하라.
+SQL> select mod(stu_weight,30) from student;
+
+
+
+70.신장이 없는 사원의 경우 ‘미기록;을 나타내도록 하는 질의문을 작성하시오.
+SQL> select nvl(to_char(stu_height),'미기록') from student;
+
+
+
+71.신장과 체중을 합한 값을 학번,이름과 함꼐 구하라.(NVL 사용)
+SQL> select stu_no,stu_name, (nvl(stu_height,0)+stu_weight) from student;
+
+
+72.체중에서 신장을 뺀 값을 학번,이름과 함께 구하라.(NVL 사용)
+SQL> select stu_no,stu_name,(stu_weight-nvl(stu_height,0)) from student;
+
+
+73.신장이 NULL인 경우 ‘입력요망’으로 바꾸어 학번,이름을 구하라.
+SQL> select stu_no,stu_name,nvl(to_char(stu_height),'입력요망') from student;
+
+74.학생의 성별을 NULLIF로 비교하여,남학생인 경우 성별과,NULL을 검색하라.
+SQL> select stu_gender,nullif(stu_gender,'M') from student;
+
+
+75.학생의 성별을 NULLIF로 비교하여,남학생인 경우 성별과,‘남자’로 검색하라.
+SQL> select stu_gender,nvl(nullif(stu_gender,'M'),'남자') from student;
+
+
+76.다음 문장의 결과를 확인하시오.
+SQL> select stu_no,stu_name,stu_weight, case stu_gender when 'F' then stu_weight+5
+                                                           when 'M' then stu_weight-5
+                                                           else stu_weight
+                                                           end as 변경된몸무게  
+      from student;
+
+
+77.다음 문장의 결과를 확인하시오.
+SQL> select stu_no,stu_name,stu_weight,
+         decode(stu_gender,'F',stu_weight+5,'M',stu_weight-5,stu_weight) as 변경된몸무게 
+      from student;
+
+
+78.학생 중 키가 가장 큰 학생의 신장을 구하라.
+SQL> select max(stu_height) from student;
+
+
+79.학생 중 키가 가장 작은 신장을 구하라.
+SQL> select min(stu_height) from student;
+
+
+80.학생 중 체중이 가장 적은 학생의 학번,이름,체중을 구하라.
+SQL> select min(stu_weight) from student;
+
+
+81.학생의 이름 중 MAX와 MIN 값을 구하라.
+SQL> select max(stu_name),min(stu_name) from student;
+
+
+
+82.전체 학생의 체중,신장의 MAX와MIN 값을 구하라.
+SQL> select max(stu_weight),min(stu_weight),max(stu_height),min(stu_height) from student;
+
+
+
+83.학번의 MAX와MIN 값을 구하라.
+SQL> select max(stu_no),min(stu_no) from student;
+
+
+84.중복을 제거하여 학과의 개수를 구하라.
+SQL> select count(distinct stu_dept) from student;
+
+85.학생들의 성씨의 개수를 구하라.
+SQL> select count(distinct substr(stu_name,1,1)) from student;
+
+
+86.학생테이블의 레코드(튜플)슈를 구하라.
+SQL> select count(*) from student;
+
+87.수강테이블의 레코드(튜플)수를 구하라.
+SQL> select count(*) from enrol;
+
+
+88.학과별 학생들의 인원수를 구하라.
+SQL>select stu_dept,count(*) from student
+     group by stu_dept;
+     
+
+89.학년별 학생들의 인원수를 구하라.
+SQL> select stu_grade,count(*) from student
+      group by stu_grade;
+
+
+
+
+90.학과별 학생들의 평균 신장을 구하라.
+SQL> select stu_dept,trunc(avg(stu_height),0) from student
+      group by stu_dept;
+
+
+
+91.학과별 학생들의 체중의 표준편차를 구하라.
+SQL> select stu_dept,round(stddev(stu_weight),2) from student
+      group by stu_dept;
+
+
+92.학과별 학년별 학생들의 신장평균을 구하라.
+SQL> select stu_dept,stu_grade,avg(stu_height) from student
+      group by stu_dept,stu_grade;
+
+93.학과별 학년별 학생들의 평균체중을 구하라.
+SQL> select stu_dept,stu_grade,avg(stu_weight) from student
+      group by stu_dept,stu_grade;
+
+
+94.학과별 학년별 학생들의 학번의 MAX와 MIN값을 구하라.
+SQL> select stu_dept,stu_grade,max(stu_no),min(stu_no) from student
+      group by stu_dept,stu_grade;
+
+
+95.학과별 학생들의 인원수를 인원수가 많은 순으로 구하라.
+SQL> select stu_dept,count(*) from student
+      group by stu_dept order by 2 desc;
+
+
+
+96.학과별 학생들의 평균 신장을 평균신장 순으로 구하라.
+SQL> select stu_dept,round(avg(stu_height),0) from student
+      group by stu_dept order by 2;
+
+
+97.학과별 학년별 학생의 체중 합을 많은 순으로 구하라.
+SQL> select stu_dept,stu_grade,sum(stu_weight) from student
+      group by stu_dept,stu_grade order by 3 desc;
+
+
+98.학과별 학년별 학생들의 평균체중을 체중평균이 많은 순으로 구하라.
+SQL> select stu_dept,stu_grade,avg(stu_weight) from student
+      group by stu_dept,stu_grade order by 3 desc;
+
+99.학과별 학생들의 평균 신장을 평균신장이 높은 순으로 구하라.
+SQL> select stu_dept,round(avg(stu_height),0) from student
+      group by stu_dept order by 2 desc;
+
+
+100.학과별 학생들의 신장편균이 170 이상인 학과를 신장 평균이 낮은 순으로 구하라.
+SQL> select stu_dept,round(avg(stu_height),0) from student
+     group by stu_dept having avg(stu_height)>=170 order by 2;
