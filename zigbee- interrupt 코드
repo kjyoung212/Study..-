@@ -19,6 +19,7 @@ void ZUSER_AppInit()
 	zPrintf(1,LOG_BIT_LEVEL_APP,"\n #Starting!!#\n");
 	ZSYS_EXT_INTR_SET(0,1,1);//인터럽트 0 번을 활성화한다. 1눌렷을떄 , 1 활성 
 	ZSYS_EXT_INTR_SET(1,1,1);
+	
 	Button_Counter=0;
 
 	return;
@@ -27,12 +28,14 @@ void External_Interrupt_0(void) interrupt 0
 {
 	Button_Counter++;
 	zPrintf(1,LOG_BIT_LEVEL_APP,"\n #interrupt function!!\n");
+	
 	return;
 }
 void External_222(void) interrupt 2 //1일거 같지만 2 이다
 {
 	Button_Counter++;
 	zPrintf(1,LOG_BIT_LEVEL_APP,"\n #2222222222!!\n");
+	
 	return;
 }
 void ZUSER_TIMER_Receive()
@@ -40,5 +43,6 @@ void ZUSER_TIMER_Receive()
 	zPrintf(1,LOG_BIT_LEVEL_APP,"\n #Timer Expire (Interrupt Counter : %d \n",Button_Counter);
 	
 	pHwExtension->TimerTick=1000;
+	
 	return;
 }
