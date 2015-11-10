@@ -1,0 +1,60 @@
+#include"MCU.h"
+#include"global.h"
+#include"ZTYPE.h"
+#include"ZSTACK.h"
+
+UINT16 Timer_Count;
+
+void ZUSER_AppMain()
+{
+	return;
+}
+
+void ZUSER_AppInit()
+{
+	ZSYS_UART_SET(1,9600,1,0x80);
+	pHwExtension->LogLevel=LOG_BIT_LEVEL_APP;
+	pHwExtension->TimerTick=1000; //1000 이 딱 1초다
+	zPrintf(1,LOG_BIT_LEVEL_APP,"\n Starting !! \n");
+	ZSYS_EXT_INTR_SET(0,1,1);//인터럽트 0 번을 활성화한다. 1눌렷을떄 , 1 활성 
+	ZSYS_EXT_INTR_SET(1,1,1);
+	Timer_Count=10;
+
+	return;
+
+}
+
+void ZUSER_TIMER_Receive() //정해진 시간마다 동작
+{
+	zPrintf(1,LOG_BIT_LEVEL_APP,"\n %d \n",Timer_Count);
+
+	Timer_Count--;
+
+	if(Timer_Count==0)
+	{
+		pHwExtension->TimerTick=0;
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n BANG! \n");
+	}
+	else
+	{
+		pHwExtension->TimerTick=1000;
+		
+	}
+	
+
+	return;
+}
+void External_Interrupt_0(void) interrupt 0
+{
+	pHwExtension->TimerTick=0;          //인터럽트 0 눌리면 타이머 0해주고 BANG뜨고 멈춤
+	zPrintf(1,LOG_BIT_LEVEL_APP,"\n BANG! \n");
+
+	return;
+}
+void External_222(void) interrupt 2 //1일거 같지만 2 이다
+{
+	pHwExtension->TimerTick=0;         //인터럽트 1 눌리면 타이머 0해주고 Stop뜨고 멈춤
+	zPrintf(1,LOG_BIT_LEVEL_APP,"\n #Stop!!\n");
+
+	return;
+}
