@@ -1,0 +1,95 @@
+#include "MCU.h"
+#include "global.h"
+#include "ZTYPE.h"
+#include "ZSTACK.h"
+
+#define LIGHT_SW_ON	1
+#define LIGHT_SW_OFF 0
+
+#define LIGHT_SW_1P	ZAPI_USER_GPIO_OUT_1P
+#define LIGHT_SW_2P	ZAPI_USER_GPIO_OUT_2P
+#define LIGHT_SW_3P	ZAPI_USER_GPIO_OUT_3P
+#define LIGHT_SW_4P	ZAPI_USER_GPIO_OUT_4P
+
+void Eval_Light_Control(UINT8 DevID, UINT8 Value)
+{
+	switch(DevID)
+	{
+		case 1:
+			if(Value==0)	LIGHT_SW_1P = LIGHT_SW_OFF;
+			if(Value==1)	LIGHT_SW_1P = LIGHT_SW_ON;
+			if(Value==2) 	LIGHT_SW_1P = (LIGHT_SW_1P==LIGHT_SW_ON) ? LIGHT_SW_OFF : LIGHT_SW_ON;
+
+			break;
+		case 2:
+
+			if(Value==0)	LIGHT_SW_2P = LIGHT_SW_OFF;
+			if(Value==1)	LIGHT_SW_2P = LIGHT_SW_ON;
+			if(Value==2) 	LIGHT_SW_2P = (LIGHT_SW_2P==LIGHT_SW_ON) ? LIGHT_SW_OFF : LIGHT_SW_ON;
+
+			break;
+
+		case 3:
+			if(Value==0)	LIGHT_SW_3P = LIGHT_SW_OFF;
+			if(Value==1)	LIGHT_SW_3P = LIGHT_SW_ON;
+			if(Value==2) 	LIGHT_SW_3P = (LIGHT_SW_3P==LIGHT_SW_ON) ? LIGHT_SW_OFF : LIGHT_SW_ON;
+
+			break;
+
+		case 4:
+			if(Value==0)	LIGHT_SW_4P = LIGHT_SW_OFF;
+			if(Value==1)	LIGHT_SW_4P = LIGHT_SW_ON;
+			if(Value==2) 	LIGHT_SW_4P = (LIGHT_SW_4P==LIGHT_SW_ON) ? LIGHT_SW_OFF : LIGHT_SW_ON;
+
+			break;
+
+		default:
+			break;
+
+
+	}
+}
+
+void ZUSER_AppInit()
+{
+	ZSYS_UART_SET(1,9600,1,0x80);
+	pHwExtension->LogLevel=LOG_BIT_LEVEL_APP;
+	P0OEN = 0xf0;
+	P0REN = 0x0f;
+	pHwExtension->TimerTick=1000;
+}
+
+void ZUSER_TIMER_Receive()
+{
+	if(ZAPI_USER_GPIO_IN_1P==0)
+	{
+		Eval_Light_Control(1,2);
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 1 Toggle!!");
+
+	}
+	else if(ZAPI_USER_GPIO_IN_2P==0)
+	{
+		Eval_Light_Control(2,2);
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 2 Toggle!!");
+
+	}
+	else if(ZAPI_USER_GPIO_IN_3P==0)
+	{
+		Eval_Light_Control(3,2);
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 3 Toggle!!");
+
+	}
+	else if(ZAPI_USER_GPIO_IN_4P==0)
+	{
+		Eval_Light_Control(4,2);
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 4 Toggle!!");
+
+	}
+
+	pHwExtension->TimerTick=1000;
+}
+
+void ZUSER_AppMain()
+{
+	return;
+}
