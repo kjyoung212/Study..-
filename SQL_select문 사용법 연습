@@ -10,17 +10,6 @@ SQL>　desc subject;
 SQL> select * from student;
 
 
-
-
-
-
-
-
-
-
-
-
-
 4.실습에 사용될 ENROL 테이블의 모든 데이터를 검색하라.
 SQL> select * from enrol;
 
