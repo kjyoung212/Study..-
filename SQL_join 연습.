@@ -1,0 +1,136 @@
+1.사원 테이블과 부서 테이블을 natural join 하라.
+SQL> select * from emp natural join dept;
+
+
+2.사원번호,이름,부서명을 검색하라.(equi join)
+SQL> select empno,ename,dname from emp,dept
+      where emp.deptno=dept.deptno;
+
+
+3.사번과,사원명,부서명을 검색하라.(natural join)
+SQL> select empno,ename,dname
+      from emp natural join dept;
+
+
+4.사번과,사원명,부서명을 검색하라.(join usiing)
+SQL> select empno,ename,dname
+      from emp join dept using(deptno);
+      
+5.부서지역이 NEW　YORK인 사원의 이름을 검색하라.
+SQL> select ename,loc from emp join dept using(deptno)
+      where loc= 'NEW YORK';
+
+
+6.ADMAS 사원이 근무중인 부서명과 지역을 구하라.
+SQL> select dname,loc from emp join dept on emp.deptno=dept.deptno
+      where ename= 'ADAMS';
+
+
+7.급여가 2000 이상인 사원들의 사원명과 지역을 구하라.
+SQL> select ename,loc from emp join dept on emp.deptno=dept.deptno
+      where sal>=2000;
+
+
+8.직무가 SALESMAN 이면서 CHICAGO에 근무중인 사원명을 검색하라.
+SQL> select ename from emp join dept on emp.deptno=dept.deptno
+      where job='SALESMAN' and loc='CHICAGO';
+
+
+9.NEW　YORK 과 DALLAS에 근무하는 사원들의 사번과이름을 사번순으로 구하라(단, join 은 where절을 이용한다.)
+SQL> select empno,ename from emp,dept
+      where emp.deptno=dept.deptno and ((loc='NEW YORK') or (loc='DALLAS'))
+      order by empno;
+
+
+
+
+
+
+10.부서명이 ACCOUNTING이거나, 지역이 CHICAGO인 사원의 사번과 이름을 구하라.
+SQL> select empno,ename from emp join dept on emp.deptno=dept.deptno
+      where dname='ACCOUNTING' or loc='CHICAGO';
+
+
+11.NEW YORK과 DALLAS에 근무하는 사원들의 사번과 이름을 사번순으로 구하라(natural join).
+SQL> select empno,ename from emp natural join dept 
+      where loc='NEW YORK' or loc='DALLAS'
+      order by empno;
+
+
+12.부서명이 ACCOUNTING 이거나,지역이 CHICAGO인 사원의 사번과 이름을 구하라(join using).
+SQL> select empno,ename from emp join dept using(deptno)
+      where dname='ACCOUNTING' or loc='CHICAGO'
+
+
+13.사번,이름,급여,급여등급을 검색하라.
+SQL> select empno,ename,sal,grade from emp,salgrade
+      where sal between losal and hisal;
+
+
+
+14.각 사원의 사원번호와 이름,상급자 사원번호와 이름을 검색하라.
+SQL> select a.empno,a.ename,b.empno,b.ename from emp a ,emp b
+      where a.mgr=b.empno;
+
+
+15.BLAKE 사원보다 많은 급여를 받는 사원의 이름을 검색하라.
+SQL> select ename,sal from emp
+      where sal> (select sal from emp where ename='BLAKE');
+
+
+16.FORD 사원과 같은 부서에 근무하는 사원의 이름을 구하라.
+SQL> select ename from emp
+      where deptno=(select deptno from emp where ename='FORD')
+      and ename<>'FORD';
+
+17.FORD 사원과 같은 급여를 받는 사원의 사번을 구하라.
+SQL> select empno from emp
+      where sal=(select sal from emp where ename='FORD')
+      and ename<>'FORD';
+
+
+18.부서별 인원수를 부서명과 함께 구하라.
+SQL> select deptno,dname,count(*) from dept natural join emp
+      group by deptno,dname;
+
+
+
+19.부서명이 ‘SALES’ 이면서 직무가‘MANAGER’인 사원의 사원번호,이름을 이름순으로 구하라.
+SQL> select empno,ename from emp join dept on emp.deptno=dept.deptno
+      where dname='SALES' and job='MANAGER'
+      order by ename;
+
+
+20.SCOTT 사원보다 많은 급열르 받는 사원 정보를 검색하라.
+SQL> select * from emp
+      where sal>(select sal from emp where ename='SCOTT')
+
+
+21.ALLEN 사원보다 적은 급여를 받는 사원 정보를 검색하라.
+SQL> select * from emp
+      where sal<(select sal from emp where ename='ALLEN')
+
+
+22.20번 부서 사원의 직무와 같은 직무를 하고 있는 다른 부서의 사원 정보를 구하라.
+SQL> select * from emp
+      where job in (select job from emp where deptno=20) and deptno<> 20;
+
+
+23.전체 사원의 평균 급여보다 많은 사원 정보를 구하라.
+SQL> select * from emp
+      where sal > (select avg(sal) from emp)
+
+
+24.급여가 모든 부서들의 평균 급여보다 많은 사원 정보를 구하라.
+SQL> select * from emp
+      where sal >all (select avg(sal) from emp group by deptno);
+
+
+25.20번 부서의 최대 급여보다 최대 급여가 큰 부서의 번호와,최대 급여를 구하라.
+SQL> select deptno,max(sal) from emp group by deptno
+      having max(sal)>(select max(sal) from emp where deptno= 20);
+
+
+26.CHICAGO에 위치하는 부서에 근무하는 사원 정보를 검색하라(부질의를 이용한다).
+SQL> select* from emp
+      where deptno=(select deptno from dept where loc='CHICAGO');
