@@ -54,16 +54,16 @@ void ZUSER_AppInit()
 {
 	ZSYS_UART_SET(1,9600,1,0x80);
 	pHwExtension->LogLevel=LOG_BIT_LEVEL_APP;
-	P0OEN = 0xf0;
-	P0REN = 0x0f;
+	P0OEN = 0xf0;		//초기화 시켜주는것 LED 동작허가 해주는것(0xf0 넣어서) , OEN(OUT ENABLE)
+	P0REN = 0x0f;		//초기화 시켜주는것 버튼 동작허가 (0x0f 넣어서), REN(READ ENABLE)
 	pHwExtension->TimerTick=1000;
 }
 
 void ZUSER_TIMER_Receive()
 {
-	if(ZAPI_USER_GPIO_IN_1P==0)
+	if(ZAPI_USER_GPIO_IN_1P==0)	//버튼 눌렸을때 0이다.
 	{
-		Eval_Light_Control(1,2);
+		Eval_Light_Control(1,2); //펑션 콜해준거다.
 		zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 1 Toggle!!");
 
 	}
@@ -86,7 +86,9 @@ void ZUSER_TIMER_Receive()
 
 	}
 
-	pHwExtension->TimerTick=1000;
+	pHwExtension->TimerTick=1000;	//1초마다 버튼이 눌렸나 안눌렸나 확인하겠다. 안해주면 전력소모가 심해서.
+					//언제 체크할지 모르니까.!!->감도가 별로이다.
+					//감도좋게하려면 감도를 이 값을 150으로 넣어줌.(0.15초)
 }
 
 void ZUSER_AppMain()
