@@ -3,23 +3,23 @@
 #include "ZTYPE.h"
 #include "ZSTACK.h"
 
-#define LIGHT_SW_ON  1
-#define LIGHT_SW_OFF 0
+#define LIGHT_SW_ON  1	//스위치 켜짐을 define.
+#define LIGHT_SW_OFF 0	//꺼짐을 define.
 
 #define LIGHT_SW_1P	ZAPI_USER_GPIO_OUT_1P
 #define LIGHT_SW_2P	ZAPI_USER_GPIO_OUT_2P
 #define LIGHT_SW_3P	ZAPI_USER_GPIO_OUT_3P
 #define LIGHT_SW_4P	ZAPI_USER_GPIO_OUT_4P
 
-void Eval_Light_Control(UINT8 DevID, UINT8 Value)
+void Eval_Light_Control(UINT8 DevID, UINT8 Value)  //DevID는 LED 몇번째인지 표현한것 , Value는 그 값을 표현함.
 {
 	switch(DevID)
 	{
 		case 1:
-			if(Value==0)	LIGHT_SW_1P = LIGHT_SW_OFF;
-			if(Value==1)	LIGHT_SW_1P = LIGHT_SW_ON;
-			if(Value==2) 	LIGHT_SW_1P = (LIGHT_SW_1P==LIGHT_SW_ON) ? LIGHT_SW_OFF : LIGHT_SW_ON;
-
+			if(Value==0)	LIGHT_SW_1P = LIGHT_SW_OFF; // LIGHT_SW_1P == ZAPI_USER_GPIO_OUT_1P 이거랑같은데
+			if(Value==1)	LIGHT_SW_1P = LIGHT_SW_ON;  // 나름 줄일려고define 한것.
+			if(Value==2) 	LIGHT_SW_1P = (LIGHT_SW_1P==LIGHT_SW_ON) ? LIGHT_SW_OFF : LIGHT_SW_ON; 
+			//2면 토글해라 ( 켜짐이면 꺼짐으로 꺼짐이면 켜짐으로)
 			break;
 		case 2:
 
@@ -93,3 +93,8 @@ void ZUSER_AppMain()
 {
 	return;
 }
+
+
+// IN 이면 버튼이고 OUT 이면 LED에 해당한다.
+
+
