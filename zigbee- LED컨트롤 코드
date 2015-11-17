@@ -3,7 +3,7 @@
 #include "ZTYPE.h"
 #include "ZSTACK.h"
 
-#define LIGHT_SW_ON	1
+#define LIGHT_SW_ON  1
 #define LIGHT_SW_OFF 0
 
 #define LIGHT_SW_1P	ZAPI_USER_GPIO_OUT_1P
