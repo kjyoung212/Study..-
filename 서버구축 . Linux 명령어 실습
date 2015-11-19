@@ -1,6 +1,6 @@
 1.서버내 다음 파일 검색 (ifconfig,uname,top)
 -which 명령어를 이용하여 파일 위치를 확인해서 ls -al 을 해서
--필요한 정보들을 확인했습니다.
+-필요한 정보들을 확인.
 
 -rwxr-xr-x   1 root root   73936 2012-05-10 17:17 ifconfig
 
@@ -72,7 +72,6 @@
 - cat /proc/cpuinfo 를 해서 확인
 
 
-
 6.부팅된 이후 가동되고 있는 시간 확인
 - last reboot 명령어로 확인
 
@@ -86,3 +85,5 @@ wtmp begins Tue Oct 13 03:55:32 2015
 -uname 명령어와 /etc/issue 파일을 확인
 -호스트명 : localhost.localdomain
 -커널버젼 : 2.6.32-431.el6.x86_64
+
+
