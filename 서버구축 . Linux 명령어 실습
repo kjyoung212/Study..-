@@ -1,0 +1,88 @@
+1.서버내 다음 파일 검색 (ifconfig,uname,top)
+-which 명령어를 이용하여 파일 위치를 확인해서 ls -al 을 해서
+-필요한 정보들을 확인했습니다.
+
+-rwxr-xr-x   1 root root   73936 2012-05-10 17:17 ifconfig
+
+소유자는 root 이고 위치는 /sbin/ifconfig 입니다.
+권한이 755 권한으로 주어졌습니다.
+사이즈는 73KB 입니다.
+
+-rwxr-xr-x   1 root root  27776 2013-11-23 00:36 uname
+
+소유자는 root 이고 위치는 /bin/uname 입니다.
+권한이 755 권한으로 주어졌습니다.
+사이즈는 27KB 입니다.
+
+-rwxr-xr-x   1 root root     68392 2012-11-15 22:54 top
+
+소유자는 root 이고 위치는 /usr/bin/top 입니다.
+권한이 755 권한으로 주어졌습니다.
+사이즈는 68KB 입니다.
+
+2.setuid로 설정된 파일 검색
+-find / -perm -4000 >> report 명령어 로 검색
+
+/sbin/unix_chkpwd
+/sbin/pam_timestamp_check
+/sbin/mount.nfs
+/usr/libexec/abrt-action-install-debuginfo-to-abrt-cache
+/usr/libexec/pt_chown
+/usr/libexec/polkit-1/polkit-agent-helper-1
+/usr/libexec/openssh/ssh-keysign
+/usr/sbin/suexec
+/usr/sbin/userhelper
+/usr/sbin/usernetctl
+/usr/bin/crontab
+/usr/bin/staprun
+/usr/bin/chsh
+/usr/bin/passwd
+/usr/bin/ksu
+/usr/bin/chage
+/usr/bin/sudo
+/usr/bin/at
+/usr/bin/newgrp
+/usr/bin/pkexec
+/usr/bin/gpasswd
+/usr/bin/chfn
+/lib64/dbus-1/dbus-daemon-launch-helper
+/bin/ping6
+/bin/ping
+/bin/mount
+/bin/umount
+/bin/su
+
+3.현재 등록된 사용자 수 확인
+- /etc/passwd 파일을 참조했
+- cat passwd | wc 를 한 결과
+    158     183    8578
+
+-이렇게 나오기 때문에 passwd 에 등록된 사용자 수는 158이다
+
+4.현재 서버의 네트워크 정보 확인
+-ifconfig 명령어와 route 명령어 , /ete/resolv.conf 파일 을 확인
+
+-ip address : 211.105.65.29
+-netmask : 255.255.255.0
+-gateway : 211.105.65.30
+-DNS address : nameserver 168.126.63.1
+               nameserver 168.126.63.2
+
+5.장착된 CPU 정보 확인
+- cat /proc/cpuinfo 를 해서 확인
+
+
+
+6.부팅된 이후 가동되고 있는 시간 확인
+- last reboot 명령어로 확인
+
+reboot   system boot  2.6.32-431.el6.x Fri Nov  6 16:58 - 22:53 (5+05:54)
+
+wtmp begins Tue Oct 13 03:55:32 2015
+
+- 마지막으로 부팅된 때는 11월 6 16:58이며 현재까지 5일5시간 54분 켜져있었습니다.
+
+7.서버 OS 정보 확인
+-uname 명령어와 /etc/issue 파일을 확인
+-호스트명 : localhost.localdomain
+-커널버젼 : 2.6.32-431.el6.x86_64
