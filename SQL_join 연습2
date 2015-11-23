@@ -1,0 +1,167 @@
+2-B                           201144011 김진영            제출일 : 2014년 10월 13일
+실전문제
+
+1.학생 테이블과 수강 테이블을 naturl join 하라.
+SQL> select * from student natural join enrol;
+
+
+2.학번,이름,과목명 점수를 검색하라.(equl join)
+SQL> select a.stu_no,a.stu_name,c.sub_name,b.enr_grade from student a,enrolb,subject c 
+     wherea.stu_no=b.stu_no and b.sub_no=c.sub_no;
+
+
+3.과목명과 학번 점수를 검색하라.(natural join)
+SQL> select sub_name,stu_no,enr_grade from subject natural join enrol;
+
+
+4. 과목명과 학번 점수를 검색하라(join ~using)
+SQL> select sub_name,stu_no,enr_grade from subject join enrol using(sub_no)
+
+
+
+
+
+5.점수가 70점 이상인 학생 이름을 검색하라(equl join)
+SQL> select stu_name from student a,enrol b where a.stu_no=b.stu_no and enr_grade>=70;
+
+
+6.점수가 80점 이상인 학생이름을 검색하라.(join~using)
+SQL>  select stu_name from student join enrol using(stu_no) where enr_grade>=60;
+
+
+7.점수가 70점 이하인 학생 이름을 검색하라(natural join)
+SQL> select stu_name from student natural join enrol where enr_grade<=70;
+
+
+8.김인중 학생이 수강하는 과목명과 강의 교수를 검색하라.(equi join)
+SQL> select sub_name,sub_prof from student a,enrol b,subject c 
+      where a.stu_no=b.stu_no and b.sub_no=c.sub_no and a.stu_name='김인중’;
+
+
+9.김인중 학생이 수강하는 과목명과 강의 교수를 검색하라(naturl join)
+SQL> select sub_name,sub_prof from student natural join enrol natural join subject 
+      where stu_name=’김인중’;
+
+
+10.김인중 학생이 수강하는 과목명과 강의교수를 검색하라(join~using)
+SQL> select sub_name,sub_prof from enrol join student using(stu_no) join subject using(sub_no) 
+      where stu_name='김인중';
+
+
+11.강종영 교수가 강의하는 과목을 수강하는 학생의 이름을 검색하라.
+SQL> select stu_name from student natural join enrol natural join subject 
+      where sub_prof='강종영'; 
+
+
+
+
+
+12.컴퓨터개론을 수강하는 학생들의 학번과 이름을 검색하라.
+SQL> select stu_no,stu_name from student natural join enrol natural join subject 
+      where sub_name=’컴퓨터개론’;
+
+
+13.시스템분석설계나 소프트웨어공학을 수강하는 학생들의 학번,이름,점수를 성적순으로 검색하라.
+SQL> select stu_no,stu_name,enr_grade from student natural join enrol natural join subject 
+      where sub_name='시스템분석설계' or sub_name='소프트웨어공학'
+      order by enr_grade desc; ;
+   
+14.과목이 1학년 과목이거나,컴퓨터정보과에 개설된 과목일경우 그 과목들을 수강하는 학생들의 이름을 검색하라.
+SQL> select stu_no,stu_name from student natural join enrol natural join subject 
+      where sub_grade=1 or sub_dept='컴퓨터정보';
+
+
+15.기계공작법이나 기초전자실험을 수강하는 학생들의 학번,이름,점수를 성적순으로 검색하라.
+SQL> select stu_no,stu_name,enr_grade from student natural join enrol natural join subject 
+      where sub_name='기계공작법' or sub_name='기초전자실험' order by enr_grade desc;
+
+
+16.김태영 교수나 김유석 교수가 강의하는과목을 수강하는 학생의 학번을 검색하라.(join using)
+SQL> select stu_no from student join enrol using(stu_no) join subject using(sub_no) 
+      where sub_prof=’김태영’ or sub_prof=’김유석’;
+
+
+17.학생의 이름과 점수를 검색하라.
+SQL> select stu_no,stu_name,enr_grade from student natural join enrol;
+
+18.이름이 ‘옥한빛’인 학생이 수강하는 과목명을 구하라.
+SQL> select sub_name from student natural join enrol natural join subject 
+      where stu_name=’옥한빛’;
+
+
+19.여학생이 수강중인 과목의 과목명을 모두 검색하라.
+SQL> select sub_name from student natural join enrol natural join subject 
+      where stu_gender=’F’;
+
+
+20.체중이 60이상인 학생이 수강하는 과목명을 모두 검색하라.
+SQL> select distinct sub_name from student natural join enrol natural join subject 
+      where stu_weight>=60;
+
+
+21.컴퓨터정보과에 개설된 과목을 수강하는 모든 학생의 학번과 이름을 검색하라.
+SQL> select stu_no,stu_name from student natural join enrol natural join subject 
+      where sub_dept=’컴퓨터정보’;
+
+
+22.과목별 수강인원을 과목번호,과목명과 함께 과목번호 순으로 검색하라.
+SQL> select sub_no,sub_name,count(stu_no) from student natural join enrol natural join subject
+      group by sub_no,sub_name order by sub_no;
+
+
+
+
+
+
+23.점수가 70점 이상인 학생 수를 검색하라.
+SQL> select count(*) from student natural join enrol natural join subject 
+      where enr_grade>=70;
+
+
+
+
+
+24.여학생이면서,구봉규 교수의 과목을 수강하는 학생의 이름을 검색하라.
+SQL> select stu_name from student natural join enrol natural join subject 
+      where stu_gender=’F’ and sub_prof=’구봉규’;
+
+
+25.김종헌 학생의 평균 점수보다 높은 점수를 가진 학생의 학번과 이름을 검색하라.
+SQL> select stu_no,stu_name from student natural join enrol natural join subject 
+      where enr_grade > (select avg(enr_grade) from student natural join enrol natural join subject
+                         where stu_name='김종헌') 
+      and stu_name<>'김종헌'; 
+
+26.김인중학생의 평균점수보다 낮은 점수를 가진 학생의 학번과 이름, 과목명을 검색하라.
+SQL> select stu_no,stu_name,sub_name from student natural join enrol natural join subject 
+      where enr_grade <= (select avg(enr_grade) from student natural join enrol where stu_name=’김인중’) 
+      and stu_name<>’김인중’;
+
+
+27.전체 학생의 평균 점수보다 점수가 높은 학생의 학번,이름, 과목명,점수를 검색하라.
+SQL> select stu_no,stu_name,sub_name,enr_grade from student natural join enrol natural join subject 
+      where enr_grade > (select avg(enr_grade) from student natural join enrol);
+
+
+28.점수가 각 학과 학생들의 평균점수보다 높은 학생의 학번을 검색하라.
+SQL> select stu_no from student natural join enrol natural join subject 
+      where enr_grade >=all (select avg(enr_grade) from student natural join enrol group by stu_dept);
+
+
+
+
+
+
+
+
+29.기계과의 최고점수 학생보다 최고 점수가 높은 확과의 학과명과 점수를 검색하라.
+SQL> select stu_dept,max(enr_grade) from student natural join enrol natural join subject 
+      group by stu_dept
+      having max(enr_grade) > (select max(enr_grade) from student natural join enrol where stu_dept='기계');
+
+
+30.전기전자과의 최저 점수 학생보다 최저 점수가 높은 학과의 학과명과 점수를 구하라.
+SQL> select stu_dept,min(enr_grade) from student natural join enrol natural join subject 
+      group by stu_dept having min(enr_grade) >
+      (select min(enr_grade) from student natural join enrol where stu_dept='전기전자’);
+
