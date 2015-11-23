@@ -1,5 +1,3 @@
-2-B                           201144011 김진영            제출일 : 2014년 10월 13일
-실전문제
 
 1.학생 테이블과 수강 테이블을 naturl join 하라.
 SQL> select * from student natural join enrol;
@@ -16,9 +14,6 @@ SQL> select sub_name,stu_no,enr_grade from subject natural join enrol;
 
 4. 과목명과 학번 점수를 검색하라(join ~using)
 SQL> select sub_name,stu_no,enr_grade from subject join enrol using(sub_no)
-
-
-
 
 
 5.점수가 70점 이상인 학생 이름을 검색하라(equl join)
@@ -53,9 +48,6 @@ SQL> select stu_name from student natural join enrol natural join subject
       where sub_prof='강종영'; 
 
 
-
-
-
 12.컴퓨터개론을 수강하는 학생들의 학번과 이름을 검색하라.
 SQL> select stu_no,stu_name from student natural join enrol natural join subject 
       where sub_name=’컴퓨터개론’;
@@ -88,11 +80,9 @@ SQL> select stu_no,stu_name,enr_grade from student natural join enrol;
 SQL> select sub_name from student natural join enrol natural join subject 
       where stu_name=’옥한빛’;
 
-
 19.여학생이 수강중인 과목의 과목명을 모두 검색하라.
 SQL> select sub_name from student natural join enrol natural join subject 
       where stu_gender=’F’;
-
 
 20.체중이 60이상인 학생이 수강하는 과목명을 모두 검색하라.
 SQL> select distinct sub_name from student natural join enrol natural join subject 
@@ -108,18 +98,9 @@ SQL> select stu_no,stu_name from student natural join enrol natural join subject
 SQL> select sub_no,sub_name,count(stu_no) from student natural join enrol natural join subject
       group by sub_no,sub_name order by sub_no;
 
-
-
-
-
-
 23.점수가 70점 이상인 학생 수를 검색하라.
 SQL> select count(*) from student natural join enrol natural join subject 
       where enr_grade>=70;
-
-
-
-
 
 24.여학생이면서,구봉규 교수의 과목을 수강하는 학생의 이름을 검색하라.
 SQL> select stu_name from student natural join enrol natural join subject 
@@ -137,7 +118,6 @@ SQL> select stu_no,stu_name,sub_name from student natural join enrol natural joi
       where enr_grade <= (select avg(enr_grade) from student natural join enrol where stu_name=’김인중’) 
       and stu_name<>’김인중’;
 
-
 27.전체 학생의 평균 점수보다 점수가 높은 학생의 학번,이름, 과목명,점수를 검색하라.
 SQL> select stu_no,stu_name,sub_name,enr_grade from student natural join enrol natural join subject 
       where enr_grade > (select avg(enr_grade) from student natural join enrol);
@@ -146,13 +126,6 @@ SQL> select stu_no,stu_name,sub_name,enr_grade from student natural join enrol n
 28.점수가 각 학과 학생들의 평균점수보다 높은 학생의 학번을 검색하라.
 SQL> select stu_no from student natural join enrol natural join subject 
       where enr_grade >=all (select avg(enr_grade) from student natural join enrol group by stu_dept);
-
-
-
-
-
-
-
 
 29.기계과의 최고점수 학생보다 최고 점수가 높은 확과의 학과명과 점수를 검색하라.
 SQL> select stu_dept,max(enr_grade) from student natural join enrol natural join subject 
