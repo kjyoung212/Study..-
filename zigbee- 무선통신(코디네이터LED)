@@ -1,0 +1,173 @@
+#include "MCU.h"
+#include "global.h"
+#include "ZTYPE.h"
+#include "ZSTACK.h"
+#include "dev_Light.h"
+#include "dev_Light.c"
+
+#define ProfileID_ 0x0002
+#define ClusterID_ 0x01
+#define Coordinator_EndPoint_ 0x01
+#define Device_EndPoint_ 0x01
+
+void ZUSER_NWK_IND(UINT8 OpCode,NLDME_PACKET *pNWK)
+{
+	switch(OpCode)
+	{
+		case NLME_SYNC:
+			pOutPkt->PKT.Size=sizeof(pNWK->NLME_SYNC_ind);
+			break;
+		case NLME_JOIN:
+			pOutPkt->PKT.Size=sizeof(pNWK->NLME_JOIN_ind);
+			break;
+		case NLME_LEAVE:
+			pOutPkt->PKT.Size=sizeof(pNWK->NLME_LEAVE_ind);
+			break;
+		default:
+			pOutPkt->PKT.Size=0;
+			break;
+	}
+}
+
+void ZMSG_DATA_IND(MSG_HANDLE * mHandle)
+{
+	if(mHandle->DstEndPoint==Coordinator_EndPoint_){
+		
+		if(mHandle->ProfileId==ProfileID_){
+			if(mHandle->ClusterId==ClusterID_){
+			switch(mHandle->Message[0])
+			{
+				case 0x00:
+					Eval_Light_Control(1,2);
+					zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 1 Toggle!!");
+					break;
+				case 0x01:
+					Eval_Light_Control(2,2);
+					zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 2 Toggle!!");
+					break;
+				case 0x02:
+					Eval_Light_Control(3,2);
+					zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 3 Toggle!!");
+					break;
+				case 0x03:
+					Eval_Light_Control(4,2);
+					zPrintf(1,LOG_BIT_LEVEL_APP,"\n LED 4 Toggle!!");
+					break;
+
+
+			}
+
+			}
+		}
+	}
+	return;
+}
+
+ZSTATUS ZAPI_NETWORK_FORMATION()
+{
+	UINT32 TargetChannels=0x03ffff00;
+	UINT16 TargetPanId=0xffff;
+	NLDME_PACKET tNLDME;
+
+	ZNWK_RESET_REQ(1);
+
+	ZSYS_SET_IEEEAddr(HPIB.IEEEAddress);
+	ZSYS_SET_Channel(&HPIB.Channel);
+	ZSYS_SET_PANID(HPIB.PANID);
+	ZSEC_SET_SECURITY(HPIB.SecLevel,HPIB.PreConfiguredMode,HPIB.NwkKey);
+
+	TargetChannels=(UINT32)0x01<<(HPIB.Channel);
+	TargetPanId=HPIB.PANID[1];
+	TargetPanId=(TargetPanId<<8) | HPIB.PANID[0];
+
+
+	tNLDME.NLME_NETWORK_FORMATION_req.ScanChannels=TargetChannels;
+	tNLDME.NLME_NETWORK_FORMATION_req.ScanDuration=2;
+ 	tNLDME.NLME_NETWORK_FORMATION_req.BeaconOrder=15;
+ 	tNLDME.NLME_NETWORK_FORMATION_req.SuperframeOrder=15;
+	tNLDME.NLME_NETWORK_FORMATION_req.PANId=TargetPanId;
+	tNLDME.NLME_NETWORK_FORMATION_req.BatteryLifeExtension=0;
+
+	return ZNWK_NETWORK_FORMATION_REQ(&tNLDME);
+}
+
+void ZUSER_AppInit()
+{
+	ZSYS_UART_SET(1,9600,1,0x80);
+
+	pHwExtension->LogLevel=LOG_BIT_LEVEL_APP;
+	pHwExtension->TimerTick=1000;
+
+	P0OEN = 0xf0;
+	P0REN = 0x0f;;
+
+	zPrintf(1,LOG_BIT_LEVEL_APP,"\n #Coordinator is Starting !! #\n");
+
+	if(cNWKS_SUCCESS==ZAPI_NETWORK_FORMATION()){
+		zPrintf(1,LOG_BIT_LEVEL_APP,"[LOG]NetWork Formation success \n");
+	}
+
+	else{
+		zPrintf(1,LOG_BIT_LEVEL_APP,"[LOG]NetWork Formation Fail !! #\n");
+	}
+
+	return;
+}
+
+void ZUSER_TIMER_Receive()
+{
+	UINT8 Retry;
+	MSG_HANDLE TxmHandle;
+
+	TxmHandle.ProfileId=ProfileID_;
+	TxmHandle.ClusterId=ClusterID_;
+	TxmHandle.DstEndPoint=Coordinator_EndPoint_;
+	TxmHandle.SrcEndPoint=Device_EndPoint_;
+
+	TxmHandle.AddrMode = ADDR_MODE_UINT16_ADDRESS_PRESENT;
+
+	TxmHandle.Address[0] = 0xFFFF;
+
+	TxmHandle.MessageLength=1;
+
+	if(ZAPI_USER_GPIO_IN_1P==0)
+	{
+		TxmHandle.Message[0]=0x00;
+		Eval_Light_Control(1,2);
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n Send Data : 0x00 LED 1 Toggle!!\n");
+	}
+	else if(ZAPI_USER_GPIO_IN_2P==0)
+	{
+		TxmHandle.Message[0]=0x01;
+		Eval_Light_Control(2,2);
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n Send Data : 0x01 LED 2 Toggle!!\n");
+	}
+	else if(ZAPI_USER_GPIO_IN_3P==0)
+	{
+		TxmHandle.Message[0]=0x02;
+		Eval_Light_Control(3,2);
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n Send Data : 0x01 LED 3 Toggle!!\n");
+	}
+	else if(ZAPI_USER_GPIO_IN_4P==0)
+	{
+		TxmHandle.Message[0]=0x03;
+		Eval_Light_Control(4,2);
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n Send Data : 0x03 LED 2 Toggle!!\n");
+	}
+
+	for(Retry=0;Retry<3;Retry++)
+	{
+		if(0==ZMSG_DATA_REQ(&TxmHandle))
+		{
+			zPrintf(1,LOG_BIT_LEVEL_APP,"\n Coordi : Transmission Success!!\n");
+			break;
+		}
+	}
+	TxmHandle.Message[0]=0x05;
+	return;
+}
+
+void ZUSER_AppMain()
+{
+	return;
+}
