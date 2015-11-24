@@ -172,3 +172,8 @@ void ZUSER_AppMain()
 {
 	return;
 }
+
+
+
+//보내는 (전송) 은 ZUSER_TIMER_RECEIVE 부분이고
+//받는 (수신) 은 ZMSG_DATA_IND 이다.
