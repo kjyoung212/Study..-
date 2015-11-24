@@ -29,7 +29,6 @@ void ZUSER_NWK_IND(UINT8 OpCode,NLDME_PACKET *pNWK)
 	}
 }
 
-
 void ZMSG_DATA_IND(MSG_HANDLE * mHandle)
 {
 	if(mHandle->DstEndPoint==Coordinator_EndPoint_){
@@ -64,7 +63,6 @@ void ZMSG_DATA_IND(MSG_HANDLE * mHandle)
 	return;
 }
 
-
 ZSTATUS ZAPI_NETWORK_FORMATION()
 {
 	UINT32 TargetChannels=0x03ffff00;
@@ -93,7 +91,6 @@ ZSTATUS ZAPI_NETWORK_FORMATION()
 	return ZNWK_NETWORK_FORMATION_REQ(&tNLDME);
 }
 
-
 void ZUSER_AppInit()
 {
 	ZSYS_UART_SET(1,9600,1,0x80);
@@ -116,7 +113,6 @@ void ZUSER_AppInit()
 
 	return;
 }
-
 
 void ZUSER_TIMER_Receive()
 {
@@ -156,7 +152,7 @@ void ZUSER_TIMER_Receive()
 	{
 		TxmHandle.Message[0]=0x03;
 		Eval_Light_Control(4,2);
-		zPrintf(1,LOG_BIT_LEVEL_APP,"\n Send Data : 0x03 LED 2 Toggle!!\n");
+		zPrintf(1,LOG_BIT_LEVEL_APP,"\n Send Data : 0x03 LED 4 Toggle!!\n");
 	}
 
 	for(Retry=0;Retry<3;Retry++)
@@ -168,9 +164,9 @@ void ZUSER_TIMER_Receive()
 		}
 	}
 	TxmHandle.Message[0]=0x05;
+	pHwExtension->TimerTick=1000;
 	return;
 }
-
 
 void ZUSER_AppMain()
 {
