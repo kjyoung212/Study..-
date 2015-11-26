@@ -8,3 +8,9 @@ ps -edf |grep sshd |wc |awk '{print "Process count :",$1}' >>/home/inhatc2015/j1
 netstat -na |grep EST |wc |awk '{print "Network connection:",$1}' >>/home/inhatc2015/j1144011/work1124/mem.log
 
 mail -s MEMINFO_20151124 jlucas7 < /home/inhatc2015/j1144011/work1124/mem.log
+
+
+
+
+
+절대경로를 target 을 사용하여 줄여쓰기도 가능하다.!!
