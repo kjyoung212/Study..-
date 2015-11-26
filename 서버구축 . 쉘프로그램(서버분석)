@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "ID:201144011" >> /home/inhatc2015/j1144011/work1124/mem.log
+date >> /home/inhatc2015/j1144011/work1124/mem.log
+free | awk '/Mem/ {print "Free memory:",$4,"kb"}' >> /home/inhatc2015/j1144011/work1124/mem.log
+ps -edf |grep sshd |wc |awk '{print "Process count :",$1}' >>/home/inhatc2015/j1144011/work1124/mem.log
+
+netstat -na |grep EST |wc |awk '{print "Network connection:",$1}' >>/home/inhatc2015/j1144011/work1124/mem.log
+
+mail -s MEMINFO_20151124 jlucas7 < /home/inhatc2015/j1144011/work1124/mem.log
