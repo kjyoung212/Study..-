@@ -14,3 +14,8 @@ mail -s MEMINFO_20151124 jlucas7 < /home/inhatc2015/j1144011/work1124/mem.log
 
 
 절대경로를 target 을 사용하여 줄여쓰기도 가능하다.!!
+
+
+crontab -l // 크론탭 파일 리스트보기
+crontab -e // 크론탭 수정하기
+
