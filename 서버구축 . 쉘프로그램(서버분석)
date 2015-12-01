@@ -19,3 +19,5 @@ mail -s MEMINFO_20151124 jlucas7 < /home/inhatc2015/j1144011/work1124/mem.log
 crontab -l // 크론탭 파일 리스트보기
 crontab -e // 크론탭 수정하기
 
+0 5 * * * sh /절대경로 써주고 파일이름.sh 
+해주면 크론탭에서 쉘프로그램을 매일 5시에 쓴다는 뜻.
