@@ -87,3 +87,4 @@ wtmp begins Tue Oct 13 03:55:32 2015
 -커널버젼 : 2.6.32-431.el6.x86_64
 
 
+[http[s]://]hostname[:port]/path      // 서버공격할수도 있다 조심.
