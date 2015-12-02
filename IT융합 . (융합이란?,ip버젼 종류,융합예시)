@@ -129,3 +129,6 @@ internet->Tcp/Ip 통신프로토콜을
 바이러스와 웜
 바이러스 ->파일을 깨트림
 웜 ->자기증식함
+
+네트워크보안
+-firewall,ids,ips,netwrok access control,usb보안
