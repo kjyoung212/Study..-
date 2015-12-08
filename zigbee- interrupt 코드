@@ -31,7 +31,7 @@ void External_Interrupt_0(void) interrupt 0
 	
 	return;
 }
-void External_222(void) interrupt 2 //1일거 같지만 2 이다 인터럽트1 활성
+void External_Interrupt_1(void) interrupt 2 //1일거 같지만 2 이다 인터럽트1 활성
 {
 	Button_Counter++;
 	zPrintf(1,LOG_BIT_LEVEL_APP,"\n #2222222222!!\n");
