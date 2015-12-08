@@ -12,7 +12,14 @@ syslogd
 *service
 
 
-페어런트가1이면 init 프로세스 이다
+페어런트가  1이면 init 프로세스 이다
+
+
 
 보안
--
+
+messages 와 secure 파일
+-messages 는시스템에서 일어나는 모든 인포메이션 로그 에러 들이 뜬다.
+-secure 는 보안상으로 침해가 일어났을때 많이보는 파일이다.
+
+grep Fail secure | wc -> Fail한 수를 카운트 해준다.
